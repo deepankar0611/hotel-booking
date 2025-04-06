@@ -1,0 +1,409 @@
+// Abstracts (must come first)
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// Vendors (normalize should come early)
+@use 'vendors/normalize';
+
+// Base
+@use 'base/reset';
+
+// Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/room-card';
+@use 'components/slider';
+
+// Layout
+@use 'layout/header';
+@use 'layout/footer';
+
+// Pages
+@use 'pages/home';
+@use 'pages/room-detail';
+@use 'pages/my-bookings';
+@use 'pages/auth';
+@use 'pages/admin';
+@use 'pages/not-found';
+
+// Themes
+@use 'themes/light';
+@use 'themes/dark';
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Custom styles for pages
+.page {
+  @include mixins.flex(column);
+  min-height: 100vh;
+  padding: variables.$spacing-lg;
+  
+  @include mixins.respond-to('md') {
+    padding: variables.$spacing-xl;
+  }
+  
+  &__header {
+    @include mixins.flex(column);
+    gap: variables.$spacing-md;
+    margin-bottom: variables.$spacing-xl;
+    text-align: center;
+    
+    h1 {
+      @include mixins.heading-1;
+      @include mixins.text-gradient(variables.$primary-color, variables.$accent-color);
+    }
+    
+    p {
+      color: variables.$gray-600;
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+  }
+  
+  &__content {
+    flex: 1;
+    width: 100%;
+    max-width: variables.$breakpoint-xl;
+    margin: 0 auto;
+  }
+}
+
+// Room listing styles
+.rooms-grid {
+  @include mixins.grid(1, variables.$spacing-lg);
+  
+  @include mixins.respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include mixins.respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Booking list styles
+.bookings-list {
+  @include mixins.flex(column);
+  gap: variables.$spacing-md;
+  
+  &:empty {
+    &::after {
+      content: 'No bookings found';
+      text-align: center;
+      padding: variables.$spacing-2xl;
+      color: variables.$gray-500;
+      background-color: variables.$gray-100;
+      border-radius: variables.$radius-lg;
+    }
+  }
+}
+
+// Form styles
+.form {
+  @include mixins.flex(column);
+  gap: variables.$spacing-md;
+  max-width: variables.$breakpoint-md;
+  margin: 0 auto;
+  
+  &__group {
+    @include mixins.flex(column);
+    gap: variables.$spacing-xs;
+    
+    label {
+      font-weight: 500;
+      color: variables.$gray-700;
+    }
+    
+    input, select, textarea {
+      padding: variables.$spacing-sm;
+      border: 1px solid variables.$gray-300;
+      border-radius: variables.$radius-md;
+      background-color: variables.$white;
+      
+      &:focus {
+        outline: none;
+        border-color: variables.$primary-color;
+        box-shadow: 0 0 0 3px rgba(variables.$primary-color, 0.1);
+      }
+      
+      &:disabled {
+        background-color: variables.$gray-100;
+        cursor: not-allowed;
+      }
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+  }
+}
+
+// Animation classes
+.animate {
+  &-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+  
+  &-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Utility classes
+.container {
+  width: 100%;
+  max-width: variables.$breakpoint-xl;
+  margin: 0 auto;
+  padding: 0 variables.$spacing-md;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+// Status badges
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+  padding: variables.$spacing-xs variables.$spacing-sm;
+  border-radius: variables.$radius-full;
+  font-size: 0.875rem;
+  font-weight: 500;
+  
+  &--confirmed {
+    background-color: rgba(variables.$success-color, 0.1);
+    color: variables.$success-color;
+  }
+  
+  &--pending {
+    background-color: rgba(variables.$warning-color, 0.1);
+    color: variables.$warning-color;
+  }
+  
+  &--cancelled {
+    background-color: rgba(variables.$danger-color, 0.1);
+    color: variables.$danger-color;
+  }
+  
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+// Loading states
+.loading {
+  @include mixins.skeleton-loading;
+  
+  &--text {
+    height: 1em;
+    width: 100%;
+  }
+  
+  &--image {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  
+  &--button {
+    height: 2.5rem;
+    width: 8rem;
+  }
+}
+
+// Variables
+$primary-color: #3b82f6;
+$primary-dark: #2563eb;
+$secondary-color: #10b981;
+$accent-color: #8b5cf6;
+$danger-color: #ef4444;
+$warning-color: #f59e0b;
+$success-color: #10b981;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@mixin hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@mixin gradient-bg {
+  background: linear-gradient(135deg, $primary-color, $accent-color);
+}
+
+// Custom Components
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors;
+  
+  &-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  
+  &-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+  }
+  
+  &-danger {
+    @apply bg-red-100 text-red-800 hover:bg-red-200;
+  }
+  
+  &-success {
+    @apply bg-green-100 text-green-800 hover:bg-green-200;
+  }
+  
+  &-warning {
+    @apply bg-yellow-100 text-yellow-800 hover:bg-yellow-200;
+  }
+}
+
+.card {
+  @apply bg-white rounded-xl overflow-hidden;
+  @include card-shadow;
+  @include hover-lift;
+}
+
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+// Custom Utilities
+.gradient-text {
+  background: linear-gradient(135deg, $primary-color, $accent-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+// Responsive Utilities
+@screen sm {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@screen md {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@screen lg {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@screen xl {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $gray-200;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $gray-400;
+  border-radius: 4px;
+  
+  &:hover {
+    background: $gray-500;
+  }
+} 

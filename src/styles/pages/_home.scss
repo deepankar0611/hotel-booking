@@ -1,0 +1,253 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.home {
+  &__hero {
+    position: relative;
+    min-height: calc(100vh - 80px);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    padding: $spacing-2xl $spacing-lg;
+    
+    &-content {
+      max-width: $breakpoint-xl;
+      margin: 0 auto;
+      color: $white;
+      text-align: center;
+      
+      h1 {
+        font-family: $font-secondary;
+        font-size: clamp(2.5rem, 5vw, 5rem);
+        font-weight: 700;
+        margin-bottom: $spacing-md;
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        
+        @include respond-to('sm') {
+          font-size: 5rem;
+        }
+      }
+      
+      p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        max-width: 600px;
+        margin: 0 auto $spacing-xl;
+        line-height: 1.6;
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.3s forwards;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.6s forwards;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+      pointer-events: none;
+    }
+  }
+
+  &__about {
+    padding: $spacing-2xl 0;
+    background-color: $gray-50;
+
+    &-container {
+      max-width: $breakpoint-xl;
+      margin: 0 auto;
+      padding: 0 $spacing-lg;
+      display: grid;
+      gap: $spacing-xl;
+      
+      @include respond-to('md') {
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+      }
+    }
+
+    &-content {
+      h2 {
+        font-family: $font-secondary;
+        font-size: 2.5rem;
+        color: $gray-900;
+        margin-bottom: $spacing-md;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -10px;
+          width: 80px;
+          height: 3px;
+          background: linear-gradient(to right, $primary-color, $primary-dark);
+        }
+      }
+
+      p {
+        color: $gray-600;
+        line-height: 1.8;
+        margin-bottom: $spacing-md;
+      }
+    }
+
+    &-image {
+      position: relative;
+      border-radius: $radius-lg;
+      overflow: hidden;
+      box-shadow: $shadow-xl;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right bottom, rgba($primary-color, 0.2), transparent);
+      }
+    }
+  }
+
+  &__features {
+    padding: $spacing-2xl 0;
+    
+    &-container {
+      max-width: $breakpoint-xl;
+      margin: 0 auto;
+      padding: 0 $spacing-lg;
+    }
+    
+    &-header {
+      text-align: center;
+      margin-bottom: $spacing-2xl;
+      
+      h2 {
+        font-family: $font-secondary;
+        font-size: 2.5rem;
+        color: $gray-900;
+        margin-bottom: $spacing-md;
+      }
+      
+      p {
+        color: $gray-600;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+    }
+    
+    &-grid {
+      display: grid;
+      gap: $spacing-lg;
+      
+      @include respond-to('md') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    &-item {
+      text-align: center;
+      padding: $spacing-lg;
+      border-radius: $radius-lg;
+      background: $white;
+      box-shadow: $shadow-lg;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+      }
+      
+      svg {
+        width: 48px;
+        height: 48px;
+        color: $primary-color;
+        margin-bottom: $spacing-md;
+      }
+      
+      h3 {
+        font-size: 1.25rem;
+        color: $gray-900;
+        margin-bottom: $spacing-sm;
+      }
+      
+      p {
+        color: $gray-600;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  &__testimonials {
+    padding: $spacing-2xl 0;
+    background-color: $gray-50;
+    
+    &-container {
+      max-width: $breakpoint-xl;
+      margin: 0 auto;
+      padding: 0 $spacing-lg;
+    }
+    
+    &-header {
+      text-align: center;
+      margin-bottom: $spacing-2xl;
+      
+      h2 {
+        font-family: $font-secondary;
+        font-size: 2.5rem;
+        color: $gray-900;
+        margin-bottom: $spacing-md;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Utility classes for animations
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.6s;
+} 

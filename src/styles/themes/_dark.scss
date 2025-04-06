@@ -1,0 +1,33 @@
+@use '../abstracts/variables' as *;
+
+[data-theme="dark"] {
+  // Colors
+  --color-primary: #{$primary-color};
+  --color-primary-dark: #{$primary-dark};
+  --color-secondary: #{$secondary-color};
+  
+  // Background colors
+  --color-bg-primary: #{$gray-900};
+  --color-bg-secondary: #{$gray-800};
+  --color-bg-tertiary: #{$gray-700};
+  
+  // Text colors
+  --color-text-primary: #{$white};
+  --color-text-secondary: #{$gray-200};
+  --color-text-tertiary: #{$gray-400};
+  
+  // Border colors
+  --color-border-primary: #{$gray-700};
+  --color-border-secondary: #{$gray-600};
+  
+  // Shadow
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  
+  // Status colors
+  --color-success: #{$success-color};
+  --color-warning: #{$warning-color};
+  --color-danger: #{$danger-color};
+  --color-info: #{$info-color};
+} 

@@ -1,0 +1,450 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:color';
+
+.admin {
+  &__container {
+    max-width: $breakpoint-xl;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+  }
+  
+  &__header {
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+      font-family: $font-secondary;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: $gray-900;
+      margin-bottom: $spacing-md;
+      
+      @include respond-to('md') {
+        font-size: 3rem;
+      }
+    }
+    
+    p {
+      color: $gray-600;
+      max-width: 600px;
+    }
+  }
+  
+  &__tabs {
+    @include flex(row, flex-start, center);
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
+    border-bottom: 1px solid $gray-200;
+    overflow-x: auto;
+    @include custom-scrollbar;
+    
+    &-item {
+      padding: $spacing-sm $spacing-md;
+      font-weight: 500;
+      color: $gray-600;
+      border-bottom: 2px solid transparent;
+      transition: all $transition-normal $transition-timing;
+      white-space: nowrap;
+      
+      &:hover {
+        color: $primary-color;
+      }
+      
+      &--active {
+        color: $primary-color;
+        border-bottom-color: $primary-color;
+      }
+    }
+  }
+  
+  &__content {
+    @include grid(1, $spacing-xl);
+    
+    @include respond-to('lg') {
+      grid-template-columns: 1fr 300px;
+    }
+  }
+  
+  &__main {
+    @include flex(column, flex-start, flex-start);
+    gap: $spacing-lg;
+  }
+  
+  &__sidebar {
+    @include card;
+    padding: $spacing-lg;
+    height: fit-content;
+    
+    &-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $gray-900;
+      margin-bottom: $spacing-md;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid $gray-200;
+    }
+    
+    &-stats {
+      @include flex(column, flex-start, flex-start);
+      gap: $spacing-md;
+      margin-bottom: $spacing-lg;
+    }
+    
+    &-stat {
+      @include flex(column, flex-start, flex-start);
+      gap: $spacing-xs;
+      
+      .label {
+        font-size: 0.875rem;
+        color: $gray-500;
+      }
+      
+      .value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $gray-900;
+      }
+    }
+    
+    &-actions {
+      @include flex(column, flex-start, flex-start);
+      gap: $spacing-sm;
+      
+      .btn {
+        @include button-base;
+        width: 100%;
+        padding: $spacing-sm;
+        border-radius: $radius-md;
+        font-weight: 500;
+        
+        &--primary {
+          background-color: $primary-color;
+          color: $white;
+          
+          &:hover {
+            background-color: $primary-dark;
+          }
+        }
+        
+        &--secondary {
+          background-color: $gray-100;
+          color: $gray-700;
+          
+          &:hover {
+            background-color: $gray-200;
+          }
+        }
+      }
+    }
+  }
+  
+  &__section {
+    @include card;
+    padding: $spacing-lg;
+    
+    &-header {
+      @include flex(row, space-between, center);
+      margin-bottom: $spacing-lg;
+      flex-wrap: wrap;
+      gap: $spacing-sm;
+      
+      @include respond-to('md') {
+        flex-wrap: nowrap;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $gray-900;
+      }
+      
+      .btn {
+        @include button-base;
+        padding: $spacing-xs $spacing-md;
+        border-radius: $radius-full;
+        font-size: 0.875rem;
+        
+        &--primary {
+          background-color: $primary-color;
+          color: $white;
+          
+          &:hover {
+            background-color: $primary-dark;
+          }
+        }
+        
+        &--secondary {
+          background-color: $gray-100;
+          color: $gray-700;
+          
+          &:hover {
+            background-color: $gray-200;
+          }
+        }
+      }
+    }
+    
+    &-filters {
+      @include flex(row, space-between, center);
+      gap: $spacing-md;
+      margin-bottom: $spacing-lg;
+      flex-wrap: wrap;
+      
+      @include respond-to('md') {
+        flex-wrap: nowrap;
+      }
+      
+      &-search {
+        flex: 1;
+        min-width: 250px;
+        
+        input {
+          width: 100%;
+          padding: $spacing-sm $spacing-md;
+          border: 1px solid $gray-300;
+          border-radius: $radius-full;
+          background-color: $white;
+          
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+          }
+        }
+      }
+      
+      &-select {
+        min-width: 150px;
+        
+        select {
+          width: 100%;
+          padding: $spacing-sm $spacing-md;
+          border: 1px solid $gray-300;
+          border-radius: $radius-full;
+          background-color: $white;
+          
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+          }
+        }
+      }
+    }
+  }
+  
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    th, td {
+      padding: $spacing-sm;
+      text-align: left;
+      border-bottom: 1px solid $gray-200;
+    }
+    
+    th {
+      font-weight: 600;
+      color: $gray-700;
+      background-color: $gray-50;
+    }
+    
+    td {
+      color: $gray-800;
+    }
+    
+    tr {
+      transition: background-color $transition-normal $transition-timing;
+      
+      &:hover {
+        background-color: $gray-50;
+      }
+    }
+    
+    &-actions {
+      @include flex(row, flex-start, center);
+      gap: $spacing-xs;
+      
+      .btn {
+        @include flex(row, center, center);
+        width: 2rem;
+        height: 2rem;
+        border-radius: $radius-md;
+        font-size: 1rem;
+        
+        &--edit {
+          background-color: rgba($primary-color, 0.1);
+          color: $primary-color;
+          
+          &:hover {
+            background-color: rgba($primary-color, 0.2);
+          }
+        }
+        
+        &--delete {
+          background-color: rgba($danger-color, 0.1);
+          color: $danger-color;
+          
+          &:hover {
+            background-color: rgba($danger-color, 0.2);
+          }
+        }
+      }
+    }
+    
+    &-status {
+      @include flex(row, flex-start, center);
+      gap: $spacing-xs;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $radius-full;
+      font-size: 0.875rem;
+      font-weight: 500;
+      width: fit-content;
+      
+      &--confirmed {
+        background-color: rgba($success-color, 0.1);
+        color: $success-color;
+      }
+      
+      &--pending {
+        background-color: rgba($warning-color, 0.1);
+        color: $warning-color;
+      }
+      
+      &--cancelled {
+        background-color: rgba($danger-color, 0.1);
+        color: $danger-color;
+      }
+    }
+  }
+  
+  &__pagination {
+    @include flex(row, center, center);
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+    
+    &-item {
+      @include flex(row, center, center);
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: $radius-md;
+      font-weight: 500;
+      transition: all $transition-normal $transition-timing;
+      
+      &--active {
+        background-color: $primary-color;
+        color: $white;
+      }
+      
+      &:not(.admin__pagination-item--active) {
+        background-color: $gray-100;
+        color: $gray-700;
+        
+        &:hover {
+          background-color: $gray-200;
+        }
+      }
+      
+      &--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        
+        &:hover {
+          background-color: $gray-100;
+        }
+      }
+    }
+  }
+  
+  &__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($gray-900, 0.5);
+    z-index: $z-modal;
+    @include flex(row, center, center);
+    padding: $spacing-md;
+    
+    &-content {
+      @include card;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      @include custom-scrollbar;
+    }
+    
+    &-header {
+      @include flex(row, space-between, center);
+      margin-bottom: $spacing-lg;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid $gray-200;
+      
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $gray-900;
+      }
+      
+      .btn {
+        @include flex(row, center, center);
+        width: 2rem;
+        height: 2rem;
+        border-radius: $radius-full;
+        background-color: $gray-100;
+        color: $gray-700;
+        
+        &:hover {
+          background-color: $gray-200;
+        }
+      }
+    }
+    
+    &-body {
+      margin-bottom: $spacing-lg;
+    }
+    
+    &-footer {
+      @include flex(row, flex-end, center);
+      gap: $spacing-sm;
+      padding-top: $spacing-md;
+      border-top: 1px solid $gray-200;
+      
+      .btn {
+        @include button-base;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-md;
+        font-weight: 500;
+        
+        &--primary {
+          background-color: $primary-color;
+          color: $white;
+          
+          &:hover {
+            background-color: $primary-dark;
+          }
+        }
+        
+        &--secondary {
+          background-color: $gray-100;
+          color: $gray-700;
+          
+          &:hover {
+            background-color: $gray-200;
+          }
+        }
+        
+        &--danger {
+          background-color: $danger-color;
+          color: $white;
+          
+          &:hover {
+            background-color: color.adjust($danger-color, $lightness: -10%);
+          }
+        }
+      }
+    }
+  }
+} 

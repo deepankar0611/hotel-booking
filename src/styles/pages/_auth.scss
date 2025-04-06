@@ -1,0 +1,222 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.auth {
+  min-height: calc(100vh - 200px);
+  @include flex(row, center, center);
+  padding: $spacing-xl 0;
+  background-color: $gray-50;
+  
+  &__container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+  }
+  
+  &__card {
+    @include card;
+    padding: $spacing-xl;
+    text-align: center;
+  }
+  
+  &__header {
+    margin-bottom: $spacing-lg;
+    
+    &-logo {
+      @include flex(row, center, center);
+      gap: $spacing-sm;
+      margin: 0 auto $spacing-md;
+      font-family: $font-secondary;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $primary-color;
+      text-decoration: none;
+      
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+    
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $gray-900;
+      margin-bottom: $spacing-sm;
+    }
+    
+    p {
+      color: $gray-600;
+    }
+  }
+  
+  &__form {
+    @include flex(column, flex-start, flex-start);
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    
+    &-group {
+      @include flex(column, flex-start, flex-start);
+      gap: $spacing-xs;
+      width: 100%;
+      
+      label {
+        font-weight: 500;
+        color: $gray-700;
+      }
+      
+      input {
+        width: 100%;
+        padding: $spacing-sm;
+        border: 1px solid $gray-300;
+        border-radius: $radius-md;
+        background-color: $white;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+        }
+        
+        &--error {
+          border-color: $danger-color;
+          
+          &:focus {
+            box-shadow: 0 0 0 3px rgba($danger-color, 0.1);
+          }
+        }
+      }
+      
+      .error-message {
+        color: $danger-color;
+        font-size: 0.875rem;
+      }
+    }
+    
+    &-remember {
+      @include flex(row, flex-start, center);
+      gap: $spacing-xs;
+      margin-top: $spacing-xs;
+      
+      input {
+        width: 1rem;
+        height: 1rem;
+      }
+      
+      label {
+        font-size: 0.875rem;
+        color: $gray-600;
+      }
+    }
+    
+    &-forgot {
+      margin-left: auto;
+      font-size: 0.875rem;
+      color: $primary-color;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    &-submit {
+      @include button-base;
+      background-color: $primary-color;
+      color: $white;
+      width: 100%;
+      padding: $spacing-md;
+      border-radius: $radius-md;
+      font-weight: 600;
+      margin-top: $spacing-sm;
+      
+      &:hover {
+        background-color: $primary-dark;
+      }
+      
+      &:disabled {
+        background-color: $gray-400;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  &__divider {
+    @include flex(row, center, center);
+    gap: $spacing-md;
+    margin: $spacing-lg 0;
+    
+    &::before, &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: $gray-200;
+    }
+    
+    span {
+      color: $gray-500;
+      font-size: 0.875rem;
+    }
+  }
+  
+  &__social {
+    @include flex(column, flex-start, flex-start);
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+    
+    &-button {
+      @include flex(row, center, center);
+      gap: $spacing-sm;
+      width: 100%;
+      padding: $spacing-sm;
+      border: 1px solid $gray-300;
+      border-radius: $radius-md;
+      background-color: $white;
+      color: $gray-700;
+      font-weight: 500;
+      transition: all $transition-normal $transition-timing;
+      
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+      
+      &:hover {
+        background-color: $gray-50;
+        border-color: $gray-400;
+      }
+      
+      &--google {
+        color: #ea4335;
+      }
+      
+      &--facebook {
+        color: #1877f2;
+      }
+      
+      &--twitter {
+        color: #1da1f2;
+      }
+    }
+  }
+  
+  &__footer {
+    text-align: center;
+    
+    p {
+      color: $gray-600;
+      font-size: 0.875rem;
+      
+      a {
+        color: $primary-color;
+        font-weight: 500;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+} 

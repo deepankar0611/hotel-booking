@@ -1,0 +1,197 @@
+@use 'variables' as *;
+
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (min-width: $breakpoint-sm) { @content; }
+  }
+  @if $breakpoint == "md" {
+    @media (min-width: $breakpoint-md) { @content; }
+  }
+  @if $breakpoint == "lg" {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+  @if $breakpoint == "xl" {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+  @if $breakpoint == "2xl" {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+// Breakpoint mixins
+@mixin media-breakpoint-up($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: 640px) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: 1024px) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: 1280px) { @content; }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: 1536px) { @content; }
+  }
+}
+
+// Flexbox layouts
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Grid layouts
+@mixin grid($columns: 1, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat($columns, minmax(0, 1fr));
+  gap: $gap;
+}
+
+// Typography styles
+@mixin heading-1 {
+  font-family: $font-secondary;
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@mixin heading-2 {
+  font-family: $font-secondary;
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+// Card styles
+@mixin card($padding: $spacing-md, $radius: $radius-lg) {
+  background-color: $white;
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: $shadow-md;
+  transition: transform $transition-normal $transition-timing,
+              box-shadow $transition-normal $transition-timing;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Button styles
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  font-weight: 500;
+  transition: all $transition-normal $transition-timing;
+  cursor: pointer;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Glass morphism effect
+@mixin glass-effect {
+  background: rgba($white, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba($white, 0.2);
+}
+
+// Image hover zoom effect
+@mixin image-zoom {
+  overflow: hidden;
+  
+  img {
+    transition: transform $transition-normal $transition-timing;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Custom scrollbar
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $gray-100;
+    border-radius: $radius-full;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $gray-300;
+    border-radius: $radius-full;
+    
+    &:hover {
+      background: $gray-400;
+    }
+  }
+}
+
+// Text gradient
+@mixin text-gradient($start-color, $end-color) {
+  background: linear-gradient(to right, $start-color, $end-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+// Loading skeleton
+@mixin skeleton-loading {
+  animation: skeleton-loading 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    $gray-200 25%,
+    $gray-300 50%,
+    $gray-200 75%
+  );
+  background-size: 200% 100%;
+  border-radius: $radius-md;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Animation mixins
+@mixin transition($property: all) {
+  transition: $property 0.3s ease;
+}
+
+@mixin hover-lift {
+  @include transition(transform);
+  &:hover {
+    transform: translateY(-5px);
+  }
+} 

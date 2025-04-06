@@ -1,0 +1,220 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.room-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-xl;
+  background: $white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shadow-lg;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: auto;
+  min-height: 500px;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-xl;
+    
+    .room-card__image {
+      transform: scale(1.05);
+    }
+  }
+  
+  &__image-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  }
+  
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  &__content {
+    flex: 1;
+    padding: $spacing-lg;
+    background: $white;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+  
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    @include text-gradient($primary-color, $primary-dark);
+  }
+  
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $gray-600;
+    font-size: 0.9rem;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+      color: $primary-color;
+      flex-shrink: 0;
+    }
+  }
+  
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+    
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      font-size: 0.875rem;
+      color: $gray-600;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+        color: $primary-color;
+        flex-shrink: 0;
+      }
+
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
+  
+  &__price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $primary-color;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-top: auto;
+    
+    span {
+      font-size: 0.875rem;
+      color: $gray-500;
+      font-weight: normal;
+    }
+  }
+  
+  &__button {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: $white;
+    border: none;
+    border-radius: $radius-full;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: $spacing-sm;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.25);
+    }
+  }
+
+  // Amenity tags
+  .amenity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+    padding: 0.375rem 0.75rem;
+    border-radius: $radius-full;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.15);
+      transform: translateY(-1px);
+    }
+  }
+  
+  // Rating badge
+  .rating-badge {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    background: rgba($white, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 0.375rem 0.75rem;
+    border-radius: $radius-full;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    color: $gray-900;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+
+    svg {
+      color: $warning-color;
+    }
+  }
+
+  // Category badge
+  .category-badge {
+    position: absolute;
+    top: $spacing-md;
+    left: $spacing-md;
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: $white;
+    padding: 0.375rem 0.75rem;
+    border-radius: $radius-full;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba($primary-color, 0.25);
+    z-index: 10;
+  }
+  
+  // Loading state
+  &--loading {
+    .room-card__image-container {
+      @include skeleton-loading;
+    }
+    
+    .room-card__content {
+      > * {
+        @include skeleton-loading;
+        height: 20px;
+        margin-bottom: $spacing-sm;
+        border-radius: $radius-sm;
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate3d(0, 1, 0, 3deg);
+  }
+} 
